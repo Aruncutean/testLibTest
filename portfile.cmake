@@ -1,19 +1,29 @@
 set(MYLIBRARY_VERSION "1.0.0")
-set(MYLIBRARY_GITHUB_REPO "Aruncutean/mylibrary")
-
-vcpkg_from_github(
+set(MYLIBRARY_URL "https://github.com/Aruncutean/testLibTest/releases/download/v1.0.0/testlib.zip")
+set(MYLIBRARY_SHA512 "02A46E8715CFA2460597B32BF948706B7CDCAFC2A925DF53C57AAEF6217D88AA1085D376F6F70AC5FF746135ABF95262ADAC3B7B39027480C4688CDC079133DD")
+set(DOWNLOAD_PATH ${DOWNLOADS}/testlib.zip)
+# Download the archive
+vcpkg_download_distfile(
         OUT_SOURCE_PATH ${SOURCE_PATH}
-        REPO ${MYLIBRARY_GITHUB_REPO}
-        REF v1.0.0
-        SHA512 "0791547F4A9533C9B7AF86D1BCBEBB9F02EAAD5E0E8D9CF1B61671090FF05E790CE27898A457550F8CECFF78B4B04281961D748FB233ED9AE039B1C7B40AC0B0"
+        URLS  ${MYLIBRARY_URL}
+        FILENAME "testlib.zip"
+        SHA512 ${MYLIBRARY_SHA512}
 )
 
-vcpkg_cmake_configure()
+# Extract the archive
+vcpkg_extract_source_archive(
+        OUT_SOURCE_PATH ${SOURCE_PATH}
+        ARCHIVE ${DOWNLOAD_PATH}
+)
+
+# Configure the project
+vcpkg_cmake_configure(
+        SOURCE_PATH ${SOURCE_PATH}
+        PREFER_NINJA
+)
+
+# Build the project
 vcpkg_cmake_build()
 
+# Install the project
 vcpkg_cmake_install()
-
-file(INSTALL
-        DESTINATION ${CURRENT_PACKAGES_DIR}/lib
-        FILES ${SOURCE_PATH}/src/mylibrary.cpp
-)
