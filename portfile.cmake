@@ -1,5 +1,5 @@
 set(MYLIBRARY_VERSION "1.0.0")
-set(MYLIBRARY_GITHUB_REPO "user/mylibrary")
+set(MYLIBRARY_GITHUB_REPO "Aruncutean/mylibrary")
 
 vcpkg_from_github(
         OUT_SOURCE_PATH ${SOURCE_PATH}
