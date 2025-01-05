@@ -1,33 +1,21 @@
-set(VCPKG_ROOT "C:/vcpkg")
 
-include(${VCPKG_ROOT}/scripts/cmake/vcpkg.cmake)
 
+#set(VCPKG_ROOT "C:/vcpkg")
+#include("${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake")
+
+# Detalii despre pachetul de pe GitHub
 set(MYLIBRARY_VERSION "1.0.0")
-set(MYLIBRARY_URL "https://github.com/Aruncutean/testLibTest/releases/download/v1.0.1/testLib.zip")
-set(MYLIBRARY_SHA512 "02A46E8715CFA2460597B32BF948706B7CDCAFC2A925DF53C57AAEF6217D88AA1085D376F6F70AC5FF746135ABF95262ADAC3B7B39027480C4688CDC079133DD")
-set(DOWNLOAD_PATH ${DOWNLOADS}/testlib-${MYLIBRARY_VERSION}.zip)
-# Download the archive
-vcpkg_download_distfile(
+set(MYLIBRARY_REPO "Aruncutean/testLibTest")
+set(MYLIBRARY_REF "v1.0.2")  # Poți folosi un tag sau branch
+set(MYLIBRARY_SHA512 "0473839788890128B2F72DB1EF1B12C70C616EC259D9B37690D08BFEF66A2676308A608C5CEBCD653190ADEF3ABB93FD97E7934B4C40496FCF08BC5C907FD88F")
+
+vcpkg_from_github(
         OUT_SOURCE_PATH ${SOURCE_PATH}
-        URLS  ${MYLIBRARY_URL}
-        FILENAME "testlib-${MYLIBRARY_VERSION}.zip"
+        REPO ${MYLIBRARY_REPO}
+        REF ${MYLIBRARY_REF}
         SHA512 ${MYLIBRARY_SHA512}
 )
 
-# Extract the archive
-vcpkg_extract_source_archive(
-        OUT_SOURCE_PATH ${SOURCE_PATH}
-        ARCHIVE ${DOWNLOAD_PATH}
-)
-
-# Configure the project
 vcpkg_cmake_configure(
         SOURCE_PATH ${SOURCE_PATH}
-        PREFER_NINJA
 )
-
-# Build the project
-vcpkg_cmake_build()
-
-# Install the project
-vcpkg_cmake_install()
